@@ -1,0 +1,15 @@
+{
+    "requestID": 49857,
+    "requesterUID":"eH8CyA2asDTVLLNCd80S7TMu1S43",
+    "requestedService":"Netflix",
+    "open":true,
+    "linkedAccountID":42956
+}
+
+{
+    "requestID": 49857,
+    "requesterUID":"eH8CyA2asDTVLLNCd80S7TMu1S43",
+    "requestedService":"Netflix",
+    "open":false,
+    "linkedAccountID":null
+}
