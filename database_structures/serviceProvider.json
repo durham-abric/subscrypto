@@ -1,0 +1,20 @@
+{
+    "name":"Netflix",
+    "accountTypes":[
+        {"type":"Basic",
+        "description":"Basic plan lets you stream TV shows and movies from Netflix on one device at a time in standard definition (SD). This plan also lets you download titles to one phone or tablet.",
+        "maxUsers":1,
+        "monthlyPrice":7.99,
+        "supported":false},
+        {"type":"Standard",
+        "description":"Standard plan lets you stream TV shows and movies from Netflix on two devices at the same time and in high definition (HD) when available. This plan also lets you download titles to two phones or tablets.",
+        "maxUsers":2,
+        "monthlyPrice":10.99,
+        "supported":true},
+        {"type":"Premium",
+        "description":"Premium plan lets you stream TV shows and movies from Netflix on four devices at the same time and in high definition (HD) and ultra high definition (UHD) when available. This plan also lets you download titles to four phones or tablets.",
+        "maxUsers":4,
+        "monthlyPrice":13.99,
+        "supported":true}
+    ]
+}
