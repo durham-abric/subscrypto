@@ -2,7 +2,9 @@
     "requestID": 49857,
     "requesterUID":"eH8CyA2asDTVLLNCd80S7TMu1S43",
     "requestedService":"Netflix",
+    "openDate":59858257,
     "open":true,
+    "closeDate":59858262,
     "linkedAccountID":42956
 }
 
@@ -10,6 +12,8 @@
     "requestID": 49857,
     "requesterUID":"eH8CyA2asDTVLLNCd80S7TMu1S43",
     "requestedService":"Netflix",
+    "openDate":59858257,
     "open":false,
+    "closeDate":null,
     "linkedAccountID":null
 }

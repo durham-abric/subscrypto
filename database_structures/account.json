@@ -7,7 +7,9 @@
     },
     "encryptedUsername":"test@gmail.com",
     "encryptedPassword":"password",
+    "dateAdded":5087540904,
     "maxExternalUsers":1,
+    "active":true,
     "currentUsers":["slT6Nnzh97hYNeC0E8g8n5e9oY72"],
     "pastUsers":["eH8CyA2asDTVLLNCd80S7TMu1S43","SNeJUJQvsCTY04A3qdFB9iXWpn73"]
 }
