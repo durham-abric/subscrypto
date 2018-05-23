@@ -7,7 +7,6 @@ constructor(props){
   this.state = {
     height: window.innerHeight,
     width: window.innerWidth,
-    pageID: 1,
     loggedIn: false
   }
 }
