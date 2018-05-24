@@ -28,6 +28,10 @@ const HandleError = () => (
     <Redirect to={"/oops"}/>
 );
 
+const HomePage = () => (
+    <Redirect to={"/welcome"}/>
+);
+
 ReactDOM.render(
 
 <div>
@@ -44,7 +48,7 @@ ReactDOM.render(
                 <Route exact path="/*/add-account" component={AddAccount}/>
                 <Route exact path="/*/request-service" component={RequestService}/>
             </Route>
-            <Route path="/*" component={HandleError}/>
+            <Route path="/*" component={HomePage}/>
         </Switch>
     </Router>
     <Footer/>

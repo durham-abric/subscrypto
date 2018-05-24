@@ -29,7 +29,15 @@ class Oops extends Component{
         }
       
         render() {
-          return (<div/>);
+          return (
+            <div>
+            <div>
+                <h1 color="red">Oops!</h1>
+                <br/>
+                <h2>You weren't supposed to end up here!</h2>
+            </div>
+            </div>
+        );
         }
 }
 export default Oops;
