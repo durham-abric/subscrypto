@@ -32,12 +32,9 @@ class NavBar extends Component{
             <div style={{width: this.state.width}}>
               <div className="background" style={{width: window.innerWidth, height: window.innerHeight}}/>
                 <Navbar className="navbar">
-                  <Navbar.Header>
                    <Navbar.Brand>
                       <img src = {require('../../images/Subscrypto_title.png')} alt="Subscrypto Logo" width="300" height="75" onClick={()=>this.props.history.push('/welcome')}/>
                   </Navbar.Brand>
-                   <Navbar.Toggle/>
-                  </Navbar.Header>
                   {
                     this.state.loggedIn ?
                       <Nav pullRight>
