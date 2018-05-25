@@ -36,6 +36,7 @@ ReactDOM.render(
 
 <div>
     <Navigation/>
+    <div style={{backgroundImage: require('./images/Subscrypto_background.png')}}>
     <Router>
         <Switch>
             <Route exact path="/welcome" component={Welcome}/>
@@ -51,6 +52,7 @@ ReactDOM.render(
             <Route path="/*" component={HomePage}/>
         </Switch>
     </Router>
+    </div>
     <Footer/>
 </div>,
 document.getElementById('root'));

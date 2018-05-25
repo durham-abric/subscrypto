@@ -37,7 +37,7 @@ class NavBar extends Component{
                   </Navbar.Brand>
                   {
                     this.state.loggedIn ?
-                      <Nav pullRight>
+                      <Nav class="navbar navbar-default">
                         <NavItem eventKey={1} href="/*/dashboard" onClick={()=>this.props.history.push('/*/dashboard')}>
                           <p> Dashboard </p>
                         </NavItem>
@@ -46,7 +46,7 @@ class NavBar extends Component{
                         </NavItem>
                       </Nav>
                     :
-                      <Nav pullRight>
+                      <Nav class="navbar navbar-default">
                         <NavItem eventKey={3} href="/about" onClick={()=>this.props.history.push('/about')}>
                           <p> About </p>
                         </NavItem>
