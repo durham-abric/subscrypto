@@ -24,6 +24,10 @@ export const getSessionDetails = () => {
     return session;
 }
 
+export const getUID = () => {
+    return UID;
+}
+
 export const clearSessionData = () => {
     UID = null;
     loginTime = null;

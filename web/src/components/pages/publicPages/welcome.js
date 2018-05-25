@@ -29,7 +29,7 @@ constructor(props){
 
   render() {
     return (
-      <div className="App">
+      <div>
         <header>
           <h1 className="App-title">Subscrypto App.js</h1>
         </header>

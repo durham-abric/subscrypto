@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import{ Navbar, Nav, NavItem } from 'react-bootstrap';
+import{ Navbar, Nav, NavItem,  Button, MenuItem, Dropdown } from 'react-bootstrap';
+import * as session from '../../session/session.js';
 
 class NavBar extends Component{
     constructor(props){
@@ -16,7 +17,11 @@ class NavBar extends Component{
         }
       
         componentWillMount(){
-          
+          if (session.getUID == null){
+            this.setState({loggedIn:false});
+          }else{
+            this.setState({loggedIn:true});
+          }
         }
       
         componentDidMount(){
@@ -31,22 +36,31 @@ class NavBar extends Component{
           return (
             <div style={{width: this.state.width}}>
               <div className="background" style={{width: window.innerWidth, height: window.innerHeight}}/>
-                <Navbar className="navbar">
+                <Navbar className="navbar navbar-default navbar-fixed-top">
                    <Navbar.Brand>
-                      <img src = {require('../../images/Subscrypto_title.png')} alt="Subscrypto Logo" width="300" height="75" onClick={()=>this.props.history.push('/welcome')}/>
+                      <img src = {require('../../images/Subscrypto_title.png')} alt="Subscrypto Logo"/>
                   </Navbar.Brand>
                   {
-                    this.state.loggedIn ?
-                      <Nav class="navbar navbar-default">
+                    this.state.loggedIn?
+                      <Nav class="navbar-nav">
                         <NavItem eventKey={1} href="/*/dashboard" onClick={()=>this.props.history.push('/*/dashboard')}>
-                          <p> Dashboard </p>
+                          <p>Dashboard</p>
                         </NavItem>
-                        <NavItem eventKey={2} href="/login" onClick={()=>this.props.history.push('/login')}>
-                        <p> Logout </p>
+                        <NavItem eventKey={2} href="/*/profile" onClick={()=>this.props.history.push('/*/profile')}>
+                          <p>View Profile</p>
+                        </NavItem>
+                        <NavItem eventKey={3} href="/logout" onClick={()=>this.props.history.push('/*/add-account')}>
+                          <p>Upload New Subscription</p>
+                        </NavItem>
+                        <NavItem eventKey={4} href="/logout" onClick={()=>this.props.history.push('/*/request-service')}>
+                          <p>Request Subscription Service</p>
+                        </NavItem>
+                        <NavItem eventKey={5} href="/logout" onClick={()=>this.props.history.push('/welcome')}>
+                          <b>Logout</b>
                         </NavItem>
                       </Nav>
                     :
-                      <Nav class="navbar navbar-default">
+                    <Nav class="navbar-nav">
                         <NavItem eventKey={3} href="/about" onClick={()=>this.props.history.push('/about')}>
                           <p> About </p>
                         </NavItem>
@@ -54,9 +68,9 @@ class NavBar extends Component{
                           <p> Signup </p>
                         </NavItem>
                         <NavItem eventKey={5} href="/login" onClick={()=>this.props.history.push('/login')}>
-                          <p> Login </p>
+                          <b> Login </b>
                         </NavItem>
-                      </Nav>
+                    </Nav>
                   }
               </Navbar>
             </div>
