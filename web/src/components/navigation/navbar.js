@@ -17,10 +17,10 @@ class NavBar extends Component{
         }
       
         componentWillMount(){
-          if (session.getUID == null){
-            this.setState({loggedIn:false});
-          }else{
+          if (session.getUID()){
             this.setState({loggedIn:true});
+          }else{
+            this.setState({loggedIn:false});
           }
         }
       
@@ -49,13 +49,13 @@ class NavBar extends Component{
                         <NavItem eventKey={2} href="/*/profile" onClick={()=>this.props.history.push('/*/profile')}>
                           <p>View Profile</p>
                         </NavItem>
-                        <NavItem eventKey={3} href="/logout" onClick={()=>this.props.history.push('/*/add-account')}>
+                        <NavItem eventKey={3} href="/*/add-account" onClick={()=>this.props.history.push('/*/add-account')}>
                           <p>Upload New Subscription</p>
                         </NavItem>
-                        <NavItem eventKey={4} href="/logout" onClick={()=>this.props.history.push('/*/request-service')}>
+                        <NavItem eventKey={4} href="/*/request-service" onClick={()=>this.props.history.push('/*/request-service')}>
                           <p>Request Subscription Service</p>
                         </NavItem>
-                        <NavItem eventKey={5} href="/logout" onClick={()=>this.props.history.push('/welcome')}>
+                        <NavItem eventKey={5} href="/welcome" onClick={()=>this.props.history.push('/welcome').then(this.setState({loggedIn:false}))}>
                           <b>Logout</b>
                         </NavItem>
                       </Nav>
