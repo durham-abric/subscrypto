@@ -24,14 +24,6 @@ import * as Firebase from './firebase/firebase.js';
 //Configure database connection 
 Firebase.init();
 
-const HandleError = () => (
-    <Redirect to={"/oops"}/>
-);
-
-const HomePage = () => (
-    <Redirect to={"/welcome"}/>
-);
-
 ReactDOM.render(
 
 <div>
@@ -39,7 +31,7 @@ ReactDOM.render(
     <div>
     <Router>
         <Switch>
-            <Route exact path="/welcome" component={Welcome}/>
+            <Route exact path="/" component={Welcome}/>
             <Route exact path="/about" component={About}/>
             <Route exact path="/signup" component={Signup}/>
             <Route exact path="/login" component={Login}/>
@@ -49,7 +41,6 @@ ReactDOM.render(
                 <Route exact path="/*/add-account" component={AddAccount}/>
                 <Route exact path="/*/request-service" component={RequestService}/>
             </Route>
-            <Route path="/*" component={HomePage}/>
         </Switch>
     </Router>
     </div>

@@ -31,7 +31,7 @@ body {
 }
 
 .center{
-  display:flex;
+  display:block;
   flex-direction:row ;
   justify-content:center;
   align-items:center;
@@ -49,10 +49,9 @@ body {
 .subscrypto {
   font-family: Arial;  
   font-style: bold;
-  letter-spacing: -3px;
-  word-spacing: -3px;
   color: rgb(231, 31, 31);
-  text-shadow: 3px 3px rgb(238, 99, 99);
+  text-shadow: 1px 1px rgb(238, 99, 99);
 }
 
 @import './css/_welcome.css';
+@import './css/_about.css';

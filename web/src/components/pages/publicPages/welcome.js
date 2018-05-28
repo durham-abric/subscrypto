@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../../css/_welcome.css';
+import {Button} from 'react-bootstrap';
 
 class Welcome extends Component {
 
@@ -8,16 +8,16 @@ constructor(props){
   this.state = {
     height: window.innerHeight,
     width: window.innerWidth,
-    logoHeight: 3/4*655/1178*window.innerWidth,
-    logoWidth: 3/4*window.innerWidth
+    logoHeight: 5/8*655/1178*window.innerWidth,
+    logoWidth: 5/8*window.innerWidth
   }
 }
 
   resize = () => {
     this.setState({height: window.innerHeight,
       width: window.innerWidth,
-      logoHeight: 3/4*655/1178*window.innerWidth,
-      logoWidth: 3/4*window.innerWidth
+      logoHeight: 5/8*655/1178*window.innerWidth,
+      logoWidth: 5/8*window.innerWidth
   })}
 
   componentWillMount(){
@@ -38,9 +38,12 @@ constructor(props){
         <header className="welcome-header">
           <img className="welcome-logo" src = {require('../../../images/Subscrypto_header.png')} 
             style ={{height:this.state.logoHeight, width:this.state.logoWidth}} alt="Subscrypto Header"/>
-          <div className="welcome-title center">
-            <h1><b>COMING SOON!</b></h1>
-            <h2>Check out <a href='/about' onClick={this.props.history.push('/about')}>About</a> to learn more about <p className='subscrypto'>Subscrypto</p></h2>
+          <h1 className="welcome-title center"><b>COMING SOON!</b></h1>
+          <br/>
+          <div className="center">
+            <h2>Check out{' '}<i>About</i>{' '}to learn more about <b className="subscrypto">Subscrypto</b></h2>
+            <h2>&amp;</h2>
+            <h2><i>Signup</i> now to receive news, updates, release information!</h2>
           </div>
         </header>
       </div>
