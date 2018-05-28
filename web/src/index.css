@@ -46,4 +46,13 @@ body {
   overflow-x: scroll
 }
 
+.subscrypto {
+  font-family: Arial;  
+  font-style: bold;
+  letter-spacing: -3px;
+  word-spacing: -3px;
+  color: rgb(231, 31, 31);
+  text-shadow: 3px 3px rgb(238, 99, 99);
+}
+
 @import './css/_welcome.css';

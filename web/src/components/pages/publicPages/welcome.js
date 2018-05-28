@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Panel} from 'react-bootstrap';
 import '../../../css/_welcome.css';
 
 class Welcome extends Component {
@@ -9,13 +8,17 @@ constructor(props){
   this.state = {
     height: window.innerHeight,
     width: window.innerWidth,
-    loggedIn: false
+    logoHeight: 3/4*655/1178*window.innerWidth,
+    logoWidth: 3/4*window.innerWidth
   }
 }
 
   resize = () => {
-    this.setState({width: window.innerWidth, height: window.innerHeight});
-  }
+    this.setState({height: window.innerHeight,
+      width: window.innerWidth,
+      logoHeight: 3/4*655/1178*window.innerWidth,
+      logoWidth: 3/4*window.innerWidth
+  })}
 
   componentWillMount(){
     
@@ -33,24 +36,12 @@ constructor(props){
     return (
       <div className="welcome-wrapper">
         <header className="welcome-header">
-          <img className="welcome-logo" src = {require('../../../images/Subscrypto_header.png')} style = {{width:3/4*this.state.width, height:3/4*655/1178*this.state.width}}  alt="Subscrypto Header"/>
-          <Panel className="panel panel-danger">
-            <div className="panel-header">
-              <h1 className="welcome-title">Coming Soon!</h1>
-              <br/>
-            </div>
-            <div className="panel-body">
-              <h2>Subscrypto is a service which will allow users to utilize the idle space in their subscription-based web accounts.</h2>
-              <br/>
-              <h3>The extra space can be converted into crypto-tokens which can be:
-                  <ul>
-                    <li>Sold for an effective discount on the subscription</li>
-                    <li>Used to purchase space on other users' accounts [<b> Build your own package of subscriptions!</b>]</li>
-                    <li>Held onto to appreciate value as the platform grows</li>
-                  </ul>
-              </h3>
-            </div>
-          </Panel>
+          <img className="welcome-logo" src = {require('../../../images/Subscrypto_header.png')} 
+            style ={{height:this.state.logoHeight, width:this.state.logoWidth}} alt="Subscrypto Header"/>
+          <div className="welcome-title center">
+            <h1><b>COMING SOON!</b></h1>
+            <h2>Check out <a href='/about' onClick={this.props.history.push('/about')}>About</a> to learn more about <p className='subscrypto'>Subscrypto</p></h2>
+          </div>
         </header>
       </div>
     );

@@ -13,16 +13,13 @@
 }
 
 .welcome-title * {
-    font-family: Arial; 
-    font-weight: bold; 
+    font-family: Arial;  
+    font-style: bold;
     letter-spacing: -3px;
     word-spacing: -3px;
-    color: red;
-    text-shadow: 2px 2px darkred;
-}
-
-.title-panel panel{
-
+    color: rgb(231, 31, 31);
+    text-shadow: 3px 3px rgb(238, 99, 99);
+    font-size: 50pt;
 }
 
 .welcome-logo img{
@@ -30,16 +27,4 @@
     margin-left: auto;
     margin-right: auto;
     padding: 10px;
-}
-
-.welcome-title h1{
-    font-size: 100px;
-}
-
-.welcome-title h2{
-    font-size: 80px;
-}
-
-.welcome-title h3{
-    font-size: 60px;
 }
