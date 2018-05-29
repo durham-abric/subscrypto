@@ -34,9 +34,9 @@ class NavBar extends Component{
       
         render() {
           return (
-            <div style={{width: this.state.width}}>
+            <div>
               <div className="background" style={{width: window.innerWidth, height: window.innerHeight}}/>
-                <Navbar className="navbar navbar-default navbar-fixed-top">
+                <Navbar className="navbar navbar-default navbar-fixed-top global-navbar">
                    <Navbar.Brand>
                       <img src = {require('../../images/Subscrypto_title.png')} alt="Subscrypto Logo"/>
                   </Navbar.Brand>

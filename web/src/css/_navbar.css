@@ -1,0 +1,11 @@
+.global-navbar{
+    color: gray;
+    height: 30px;
+    width: 100vw;
+}
+
+.global-footer{
+    color: gray;
+    height: 15px;
+    width:100vw;
+}

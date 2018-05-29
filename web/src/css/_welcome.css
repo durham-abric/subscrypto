@@ -3,6 +3,7 @@
     justify-content: center;
     text-align: center;
     margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .welcome-header * {
@@ -19,7 +20,15 @@
     word-spacing: -3px;
     color: rgb(231, 31, 31);
     text-shadow: 3px 3px rgb(238, 99, 99);
-    font-size: 50pt;
+    font-size: 7vw;
+}
+
+.welcome-text * {
+    font-family: Arial;  
+    font-style: bold;
+    letter-spacing: -3px;
+    word-spacing: -3px;
+    font-size: 2.7vw;
 }
 
 .welcome-logo img{
@@ -28,3 +37,4 @@
     margin-right: auto;
     padding: 10px;
 }
+

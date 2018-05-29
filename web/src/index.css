@@ -5,12 +5,14 @@ body {
 }
 
 .background{
-  display: block;
-  position: fixed;
+  display: flex;
+  position: absolute;
   opacity: 0.075;
-
+  overflow: hidden;
   background-image: url("./images/Subscrypto_coin_cropped.png");
   background-repeat: repeat;
+  background-position: bottom right;
+  z-index: -10;
 }
 
 /* width */
@@ -55,3 +57,4 @@ body {
 
 @import './css/_welcome.css';
 @import './css/_about.css';
+@import './css/_navbar.css';

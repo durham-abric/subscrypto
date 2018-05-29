@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Navbar} from 'react-bootstrap';
 
 class Footer extends Component{
     constructor(props){
@@ -27,7 +28,14 @@ class Footer extends Component{
         }
       
         render() {
-          return (<div/>);
+          return ( 
+          <div className="global-footer" style={{width: this.state.width}}>
+              <Navbar className="navbar navbar-default navbar-fixed-bottom">
+                 <Navbar.Brand>
+                    <img src = {require('../../images/Subscrypto_coin.png')} alt="Subscrypto Logo"/>
+                </Navbar.Brand>
+            </Navbar>
+          </div>);
         }
 }
 
