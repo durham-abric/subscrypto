@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
+import {Button, Panel} from 'react-bootstrap';
 
 class Welcome extends Component {
 
@@ -8,16 +8,16 @@ constructor(props){
   this.state = {
     height: window.innerHeight,
     width: window.innerWidth,
-    logoHeight: 5/8*655/1178*window.innerWidth,
-    logoWidth: 5/8*window.innerWidth
+    logoHeight: 30 + 5/8*655/1178*window.innerWidth,
+    logoWidth:  100 + 5/8*window.innerWidth
   }
 }
 
   resize = () => {
     this.setState({height: window.innerHeight,
       width: window.innerWidth,
-      logoHeight: 5/8*655/1178*window.innerWidth,
-      logoWidth: 5/8*window.innerWidth
+      logoHeight: 30 + 5/8*655/1178*window.innerWidth,
+      logoWidth:  100 + 5/8*window.innerWidth
   })}
 
   componentWillMount(){
@@ -41,7 +41,7 @@ constructor(props){
           <h1 className="welcome-title center"><b>COMING SOON!</b></h1>
           <br/>
           <div className="center welcome-text">
-            <h2>Check out{' '}<i>About</i>{' '}to learn more about <b className="subscrypto">Subscrypto</b></h2>
+            <h2>Check out{' '}<i>About</i>{' '}to learn more about{' '}<b className="subscrypto">Subscrypto</b></h2>
             <h2>&amp;</h2>
             <h2><i>Signup</i> now to receive news, updates, release information!</h2>
           </div>

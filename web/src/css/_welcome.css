@@ -3,35 +3,50 @@
     justify-content: center;
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 40px;
+    margin-bottom: auto;
 }
 
-.welcome-header * {
+.welcome-header{
     text-align: center;
     justify-content: center;
     padding: 0;
     margin: 0;
 }
 
-.welcome-title * {
+.welcome-title{
     font-family: Arial;  
     font-style: bold;
     letter-spacing: -3px;
-    word-spacing: -3px;
     color: rgb(231, 31, 31);
     text-shadow: 3px 3px rgb(238, 99, 99);
-    font-size: 7vw;
+    font-size: calc(15pt + 3vw + 3vh);
+    padding: 0px 0px;
+    margin: 0px 0px;
 }
 
-.welcome-text * {
+.welcome-text{
     font-family: Arial;  
     font-style: bold;
     letter-spacing: -3px;
-    word-spacing: -3px;
-    font-size: 2.7vw;
+    font-size: calc(5pt + 2vw + 2vh);
+    padding: 0px 0px;
+    margin: 0px 0px;
+    z-index: 5;
 }
 
-.welcome-logo img{
+.welcome-text *{
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+.welcome-panel{
+    display: fixed;
+    opacity: 0.8;
+    width: 60vw;
+    z-index: -10;
+}
+
+.welcome-logo{
     display: block;
     margin-left: auto;
     margin-right: auto;

@@ -1,11 +1,26 @@
-.global-navbar{
-    color: gray;
-    height: 30px;
-    width: 100vw;
+.navbar{
+    min-height: 20px;
+    max-height: 50px;
 }
 
-.global-footer{
-    color: gray;
-    height: 15px;
-    width:100vw;
+.navbar-fixed-bottom{
+    position: fixed;
+    height: 30px;
+}
+.navbar-fixed-bottom .navbar-brand{
+    position: fixed;
+    padding: 12px 12px;
+    margin: -9px 0px;
+}
+
+.navbar-fixed-bottom .navbar-nav{
+    position: fixed;
+    margin: -12px 70vw;
+}
+
+.footer-text{
+    display: inline;
+    font-size: 30pt;
+    color: rgba(46, 44, 44, 0);
+    z-index: 10;
 }
