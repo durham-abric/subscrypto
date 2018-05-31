@@ -6,8 +6,7 @@ class Footer extends Component{
         super(props);
         this.state = {
           height: window.innerHeight,
-          width: window.innerWidth,
-          loggedIn: false
+          width: window.innerWidth
         }
       }
       
@@ -27,11 +26,14 @@ class Footer extends Component{
           window.removeEventListener('resize', this.resize);
         }
       
+        //Insert footer text in Nav block
         render() {
           return ( 
           <div>
-              <Navbar className="navbar navbar-fixed-bottom">
+              <Navbar className="navbar-fixed-bottom">
                 <img className="navbar-brand" src = {require('../../images/Subscrypto_coin.png')} alt="Subscrypto Logo"/>
+                <Nav className="navbar-nav navbar-right">
+                </Nav>
               </Navbar>
           </div>);
         }

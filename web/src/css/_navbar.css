@@ -1,6 +1,12 @@
 .navbar{
-    min-height: 20px;
-    max-height: 50px;
+    min-height: 30px;
+}
+
+.navbar-nav{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .navbar-fixed-bottom{
@@ -13,14 +19,10 @@
     margin: -9px 0px;
 }
 
-.navbar-fixed-bottom .navbar-nav{
-    position: fixed;
-    margin: -12px 70vw;
-}
-
 .footer-text{
-    display: inline;
-    font-size: 30pt;
+    display: initial;
+    position: fixed;
+    font-size: 20pt;
     color: rgba(46, 44, 44, 0);
     z-index: 10;
 }

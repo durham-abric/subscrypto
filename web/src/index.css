@@ -10,8 +10,11 @@ body {
   opacity: 0.075;
   overflow: hidden;
   background-image: url("./images/Subscrypto_coin_cropped.png");
+  background-position: center;
   background-repeat: repeat;
-  background-position: bottom right;
+  background-attachment: fixed;
+  min-width: 500px;
+  min-height: 500px;
   z-index: -10;
 }
 

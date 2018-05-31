@@ -39,17 +39,14 @@
     margin: 0px 0px 0px 0px;
 }
 
-.welcome-panel{
-    display: fixed;
-    opacity: 0.8;
-    width: 60vw;
-    z-index: -10;
-}
-
 .welcome-logo{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding: 10px;
+    padding-top: 10px;
+    max-width: 825px;
+    max-height: 458px;
+    min-height: 229px;
+    min-width: 412px;
 }
 

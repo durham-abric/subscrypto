@@ -38,11 +38,19 @@ class NavBar extends Component{
           return (
             <div>
               <div className="background" style={{width: window.innerWidth, height: window.innerHeight}}/>
-                <Navbar className="navbar navbar-default navbar-fixed-top global-navbar">
-                  <img className="navbar-brand" src = {require('../../images/Subscrypto_title.png')} alt="Subscrypto Logo"/>
+                <Navbar className="navbar navbar-fixed-top">
+                  <div className="navbar-header">
+                    <img className="navbar-brand" src = {require('../../images/Subscrypto_title.png')} alt="Subscrypto Logo"/>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarNav">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>                        
+                     </button>
+                  </div>
                   {
                     this.state.loggedIn?
-                      <Nav class="navbar-nav">
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                      <Nav class="navbar-nav">>
                         <NavItem eventKey={1} href="/*/dashboard" onClick={()=>this.props.history.push('/*/dashboard')}>
                           <p>Dashboard</p>
                         </NavItem>
@@ -55,22 +63,29 @@ class NavBar extends Component{
                         <NavItem eventKey={4} href="/*/request-service" onClick={()=>this.props.history.push('/*/request-service')}>
                           <p>Request Subscription Service</p>
                         </NavItem>
+                      </Nav>
+                      <Nav className="navbar-nav navbar-right">
                         <NavItem eventKey={5} href="/welcome" onClick={()=>this.props.history.push('/welcome').then(this.setState({loggedIn:false}))}>
-                          <b>Logout</b>
+                          <b><span className="glyphicon glyphicon-log-out"/>Logout</b>
                         </NavItem>
                       </Nav>
+                    </div>
                     :
+                    <div className="collapse navbar-collapse" id="navbarNav">
                     <Nav class="navbar-nav">
                         <NavItem eventKey={3} href="/about" onClick={()=>this.props.history.push('/about')}>
                           <p> About </p>
                         </NavItem>
+                      </Nav>
+                      <Nav className="navbar-nav navbar-right">
                         <NavItem eventKey={4} href="/signup" onClick={()=>this.props.history.push('/signup')}>
-                          <p> Signup </p>
+                          <p><span className="glyphicon glyphicon-user"/> Signup </p>
                         </NavItem>
                         <NavItem eventKey={5} href="/login" onClick={()=>this.props.history.push('/login')}>
-                          <b> Login </b>
+                          <p><span className="glyphicon glyphicon-log-in"/> Login </p>
                         </NavItem>
                     </Nav>
+                  </div>
                   }
               </Navbar>
             </div>
