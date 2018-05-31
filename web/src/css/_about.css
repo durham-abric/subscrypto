@@ -1,0 +1,31 @@
+.about-wrapper{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: auto;
+}
+
+.about-nav-button{
+    padding: 0px;
+    width: 32vw;
+    min-width:20px;
+    height: 30px;
+    background-color: rgb(231, 31, 31);
+}
+
+.about-nav-text{
+    color: white;
+    font-size: calc(8pt+11vw);
+    font-family: Arial;  
+    font-style: bold;
+    margin: auto;
+}
+
+.about-panel{
+    margin: 20px;
+}
+
+.about-panel Panel.Heading{
+    color: red;
+}

@@ -1,0 +1,25 @@
+.subscrypto {
+    font-family: Arial;  
+    font-style: bold;
+    color: rgb(231, 31, 31);
+    text-shadow: 1px 1px rgb(238, 99, 99);
+}
+
+.center{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+  
+.clickable {
+    cursor: pointer;
+}
+
+.nav-button-bar {
+    min-height: 20px;
+    width: 100%;
+    position: fixed;
+    margin-top: 60px;
+    top: 0;
+}

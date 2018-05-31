@@ -1,12 +1,17 @@
 .navbar{
     min-height: 30px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 .navbar-nav{
     padding-top: 0px;
     padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
+    height: 50px;
 }
 
 .navbar-fixed-bottom{

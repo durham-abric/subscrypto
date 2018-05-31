@@ -8,16 +8,16 @@ constructor(props){
   this.state = {
     height: window.innerHeight,
     width: window.innerWidth,
-    logoHeight: 30 + 5/8*655/1178*window.innerWidth,
-    logoWidth:  100 + 5/8*window.innerWidth
+    logoHeight: 5/8*655/1178*window.innerWidth,
+    logoWidth:  5/8*window.innerWidth
   }
 }
 
   resize = () => {
     this.setState({height: window.innerHeight,
       width: window.innerWidth,
-      logoHeight: 30 + 5/8*655/1178*window.innerWidth,
-      logoWidth:  100 + 5/8*window.innerWidth
+      logoHeight: 5/8*655/1178*window.innerWidth,
+      logoWidth:  5/8*window.innerWidth
   })}
 
   componentWillMount(){

@@ -1,6 +1,6 @@
 // id=2
-
 import React, { Component } from 'react';
+import {Panel, Col, Button, ButtonGroup, ButtonToolbar} from 'react-bootstrap';
 
 class About extends Component{
     constructor(props){
@@ -29,7 +29,39 @@ class About extends Component{
         }
       
         render() {
-          return (<div/>);
+          return (
+            <div>
+              <div>
+                <ButtonToolbar className='btn-toolbar nav-button-bar' style={{display:'flex', justifyContent:'center'}}>
+                   <Button className='btn about-nav-button clickable'><p className="about-nav-text">The Concept</p></Button>
+                   <Button className='btn about-nav-button clickable'><p className="about-nav-text">The Coin</p></Button>
+                   <Button className='btn about-nav-button clickable'><p className="about-nav-text">The Team</p></Button>
+                </ButtonToolbar>
+              </div>
+              <div>
+              <div className='about-wrapper center'>
+                <div id='aboutConcept'>
+                  <Panel className='about-panel'>
+                  <Panel.Heading><Panel.Title>Concept heading</Panel.Title></Panel.Heading>
+                    <Panel.Body>Some default panel content here.</Panel.Body>
+                  </Panel>
+                </div>
+                <div id='aboutCoin'>
+                  <Panel className='about-panel'>
+                    <Panel.Heading><Panel.Title>Coin heading</Panel.Title></Panel.Heading>
+                    <Panel.Body>Some default panel content here.</Panel.Body>
+                  </Panel>
+                </div>
+                <div id='aboutTeam' className='center'>
+                  <Panel className='about-panel'>
+                  <Panel.Heading><Panel.Title>Team heading</Panel.Title></Panel.Heading>
+                    <Panel.Body>Some default panel content here.</Panel.Body>
+                  </Panel>
+                </div>
+              </div>
+              </div>
+            </div>
+          );
         }
 }
 
