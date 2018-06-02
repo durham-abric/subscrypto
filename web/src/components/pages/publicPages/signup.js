@@ -1,6 +1,6 @@
 // id=4
 import React, { Component } from 'react';
-import {Panel, Form, FormGroup, Button, Row, Radio} from 'react-bootstrap';
+import {Panel, Form, FormGroup, ButtonGroup, Button, Row, Radio} from 'react-bootstrap';
 //import ProgressBar from '../../subcomponents/progressBar.js'
 
 class Signup extends Component{
@@ -11,7 +11,7 @@ class Signup extends Component{
           width: window.innerWidth,
           progress: 0,
           page: 0,
-          userWallet: false,
+          userWallet: true,
           newUser:{
             firstName: null,
             lastName: null,
@@ -22,7 +22,9 @@ class Signup extends Component{
           }
         }
 
+        this.createAccount = this.createAccount.bind(this);
         this.walletAddressEntry = this.walletAddressEntry.bind(this);
+        this.signupPanel = this.signupPanel.bind(this);
         this.handleButton = this.handleButton.bind(this);
         this.backPage = this.backPage.bind(this);
       }
@@ -60,10 +62,10 @@ class Signup extends Component{
                     </div>
                     {this.signupPanel(this.state.page)}
                     {this.state.page>0?<Button onClick={this.backPage}><span className="glyphicon glyphicon-chevron-left"/></Button>:null}  
-                    <Button onClick={this.handleButton}>{this.state.page<3?<span className="glyphicon glyphicon-chevron-right"/>:"Create Account"}</Button>
+                    <Button onClick={this.handleButton} style={{height:'34px'}}>{this.state.page<4?<span className="glyphicon glyphicon-chevron-right"/>:<p>Confirm &amp; Create Account</p>}</Button>
                   </Panel.Body>
                 </Panel>
-              </div>
+              </div> 
             </div>);
         }
 
@@ -118,8 +120,8 @@ class Signup extends Component{
                     <label className='control-label'>Confirm Password</label>
                     <input className='form-control' type='password'/>
                     <br/>
-                    <label style={{fontSize:'10px', color:'gray'}}>Your password must be 8+ characters &amps; contain at least <u>one</u> numerical digit 
-                      &amps; <u>one</u> special character [!, @, #, $, %, &amps;]</label>
+                    <label style={{fontSize:'10px', color:'gray'}}>Your password must be 8+ characters &amp; contain at least <u>one</u> numerical digit 
+                      &amps; <u>one</u> special character [!, @, #, $, %, &amp;]</label>
                   </FormGroup>
                 </Form>
               </div>
@@ -131,13 +133,14 @@ class Signup extends Component{
                 <Form>
                   <FormGroup>
                     <ButtonGroup>
-                      <Radio onClick={this.setState({userWallet:true})}>Enter an Existing Ethereum Wallet Address</Radio>
-                      <Radio onClick={this.setState({userWallet:false})}>Generate New Ethereum Wallet</Radio>
+                      <Radio onClick={()=>this.setState({userWallet:true})}>Enter an Existing Ethereum Wallet Address</Radio>
+                      <Radio className="disabled" onClick={()=>this.setState({userWallet:false})}>Generate New Ethereum Wallet</Radio>
                     </ButtonGroup>
-                    <label style={{fontSize:'10px', color:'gray'}}>This ethereum wallet will be the deposit location for Subscryptons (ERC20 tokens) you earn</label>
+                    <br/>
+                    <label style={{fontSize:'10px', color:'gray'}}>This ethereum wallet will be the deposit location for Subscryptons (ERC20 tokens) you earn</label><br/>
                     <label style={{fontSize:'10px', color:'gray'}}>This ethereum wallet will also be the location from which Subscryptons are withdrawn when purchasing access to others' subscriptions</label>
                   </FormGroup>
-                  {this.walletAddressEntry(this.state.userEntry)}
+                  {this.walletAddressEntry(this.state.userWallet)}
                 </Form>
               </div>
               );
@@ -146,9 +149,12 @@ class Signup extends Component{
               return(
               <div>
                 <Form>
+                  <h4> Account Summary </h4>
                   <FormGroup>
                     <label className='control-label'>Email Address</label>
-                    <input className='form-control' type='text' placeholder='John'/>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com"/>
+                    </div>                  
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Phone Number</label>
@@ -166,13 +172,13 @@ class Signup extends Component{
           return(userEntry?
             <div>
               <FormGroup>
-                <label className='control-label'>Ethereum Wallet Address (0x...)</label>
+                <label className='control-label'>Ethereum Wallet Address</label>
                 <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA'/>
               </FormGroup>
               <FormGroup>
-                <label className='control-label'>Confirem Ethereum Wallet Address</label>
+                <label className='control-label'>Confirm Ethereum Wallet Address</label>
                 <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA'/>
-                <label style={{fontSize:'10px', color:'gray'}}><b>Note:</b><b className='subscrypto'>Subscrypto</b> is NOT responsible for the entry of an incorrect ETH address</label>
+                <label style={{fontSize:'10px', color:'gray'}}><b className='subscrypto'>Subscrypto</b> is NOT responsible for the entry of an incorrect ETH address</label><br/>
                 <label style={{fontSize:'10px', color:'gray'}}><b className='subscrypto'>Subscrypto</b> is NOT responsible for loss of any tokens sent to an incorrect address</label>
               </FormGroup>
             </div>
@@ -185,13 +191,44 @@ class Signup extends Component{
 
         handleButton(){
           var page = this.state.page;
-          page<3?this.setState({page: ++page}):null;
+          var progress = this.state.progress;
+          if(page < 4){
+            this.setState({page: ++page});
+            this.setState({progress: progress+=25});
+          }else if (page === 4){
 
+          }
+          
+          
         }
 
         backPage(){
           var page = this.state.page;
-          page>0?this.setState({page: --page}):null;
+          var progress = this.state.progress;
+          if(page > 0){
+            this.setState({page: --page});
+            this.setState({progress: progress-=25});
+          }
+        }
+
+        createAccount(){
+          alert("Account created!");
+          this.setState(
+            {
+              ...this.state,
+              progress: 0,
+              page: 0,
+              userWallet: true,
+              newUser:{
+                firstName: null,
+                lastName: null,
+                phoneNumber: null,
+                email: null,
+                password: null,
+                walletAddress: null
+              }
+            }
+          );
         }
 }
 
