@@ -1,4 +1,3 @@
-.signup-panel{
-    margin-left: 15%;
-    margin-right: 15%;
+.signup-content * label{
+    text-align: left;
 }

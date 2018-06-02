@@ -39,7 +39,8 @@ class About extends Component{
                 </ButtonToolbar>
               </div>
               <div>
-              <div className='about-wrapper center'>
+              <div className='content-wrapper center'>
+              <div className = 'about-wrapper'>
                 <div id='aboutConcept'>
                   <Panel className='about-panel'>
                   <Panel.Heading><Panel.Title>Concept heading</Panel.Title></Panel.Heading>
@@ -58,6 +59,7 @@ class About extends Component{
                     <Panel.Body>Some default panel content here.</Panel.Body>
                   </Panel>
                 </div>
+              </div>
               </div>
               </div>
             </div>
