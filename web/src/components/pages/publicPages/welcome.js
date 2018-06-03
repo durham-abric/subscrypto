@@ -34,13 +34,13 @@ constructor(props){
 
   render() {
     return (
-      <div className="welcome-wrapper">
+      <div className="content-wrapper">
         <header className="welcome-header">
           <img className="welcome-logo" src = {require('../../../images/Subscrypto_header.png')} 
             style ={{height:this.state.logoHeight, width:this.state.logoWidth}} alt="Subscrypto Header"/>
-          <h1 className="welcome-title center"><b>COMING SOON!</b></h1>
+          <h1 className="welcome-title"><b>COMING SOON!</b></h1>
           <br/>
-          <div className="center welcome-text">
+          <div className="welcome-text">
             <h2>Check out{' '}<i>About</i>{' '}to learn more about{' '}<b className="subscrypto">Subscrypto</b></h2>
             <h2>&amp;</h2>
             <h2><i>Signup</i> now to receive news, updates, release information!</h2>

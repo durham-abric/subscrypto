@@ -20,7 +20,9 @@ class Signup extends Component{
             phoneNumber: null,
             email: null,
             password: null,
-            walletAddress: null
+            passwordConfirm: null,
+            walletAddress: null,
+            walletAddressConfirm: null
           }
         }
 
@@ -175,7 +177,7 @@ class Signup extends Component{
               return(
               <div>
                 <Form>
-                  <h4> Account Summary </h4>
+                  <h4> Review &amp; Confirm Account Details </h4>
                   <FormGroup>
                     <label className='control-label'>Name</label>
                     <input type="text" readonly className="form-control disabled" value={name}/>          
@@ -231,15 +233,53 @@ class Signup extends Component{
         handleButton(){
           var page = this.state.page;
           var progress = this.state.progress;
-          if(page < 4){
-            //confirm data has been successfully entered (check state w/ regex expressions)
-            this.setState({page: ++page});
-            this.setState({progress: progress+=25});
-          }else if (page === 4){
-            this.createAccount();
+
+          const nameRegex = /^[A-Z]+(([',.-][a-zA-Z])?[a-zA-Z]*)*$/;
+          const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+          const phoneRegex = /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/g;
+          const dateRegex = /^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$/gm;
+          const adressRegex = /^0x[a-f, A-F, 0-9]{20}$/;
+          const passwordRegex
+
+          switch(page){
+            case 0:
+              var firstNameValid = nameRegex.test(this.state.newUser.firstName).val();
+              var lastNameValid = nameRegex.test(this.state.newUser.lastName).val();
+              var dobValid = dateRegex.test(this.state.newUser.dob).val();
+              if(firstNameValid && lastNameValid && dobValid){
+                this.setState({page: ++page});
+                this.setState({progress: progress+=25});
+              }else{
+                var alertText = "Error: INVALID INPUT\n";
+                !firstNameValid? alertText+="Reformat 'First Name' [must begin with capital & contain only letters]\n":null;
+                !lastNameValid? alertText+="Reformat 'Last Name' [must begin with capital & contain only letters]\n":null;
+                !dobValid? alertText+="Choose or enter valid 'Date of Birth'":null;
+                window.alert(alertText);
+              }
+              break;
+            case 1:
+              var emailValid = emailRegex.test(this.state.newUser.email).val();
+              var phoneValid = phoneRegex.test(this.state.newUser.phoneNumber).val();
+              if(emailValid && phoneValid){
+                this.setState({page: ++page});
+                this.setState({progress: progress+=25});
+              }else{
+                var alertText = "Error: INVALID INPUT\n";
+                !emailValid? alertText+="Enter a valid 'Email Address'\n":null;
+                !phoneValid? alertText+="Enter a valid 'Phone Number' or reformat as suggested [(###) ###-####]\n":null;
+                window.alert(alertText);
+              }
+            break;
+            case 2:
+              //password confirm
+            break;
+            case 3:
+              //address confirm
+            break;
+            case 4:
+              this.createAccount();
+            break;
           }
-          
-          
         }
 
         backPage(){
@@ -265,7 +305,9 @@ class Signup extends Component{
                 phoneNumber: null,
                 email: null,
                 password: null,
-                walletAddress: null
+                passwordConfirm: null,
+                walletAddress: null,
+                walletAddressConfirm: null
               }
             }
           );
