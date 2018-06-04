@@ -136,11 +136,11 @@ class Signup extends Component{
                 <Form>
                   <FormGroup>
                     <label className='control-label'>Password</label>
-                    <input className='form-control' type='password'/>
+                    <input className='form-control' type='password' onChange={(e)=> this.setState({newUser:{...this.state.newUser, password: e.target.value}})}/>
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Confirm Password</label>
-                    <input className='form-control' type='password' onChange={(e)=> this.setState({newUser:{...this.state.newUser, password: e.target.value}})}/>
+                    <input className='form-control' type='password' onChange={(e)=> this.setState({newUser:{...this.state.newUser, passwordConfirm: e.target.value}})}/>
                     <br/>
                     <label style={{fontSize:'10px', color:'gray'}}>Your password must be 8+ characters &amp; contain at least <u>one</u> numerical digit 
                       &amps; <u>one</u> special character [!, @, #, $, %, &amp;]</label>
@@ -214,11 +214,11 @@ class Signup extends Component{
             <div>
               <FormGroup>
                 <label className='control-label'>Ethereum Wallet Address</label>
-                <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA'/>
+                <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA' onChange={(e)=> this.setState({newUser:{...this.state.newUser, walletAddress: e.target.value}})}/>
               </FormGroup>
               <FormGroup>
                 <label className='control-label'>Confirm Ethereum Wallet Address</label>
-                <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA' onChange={(e)=> this.setState({newUser:{...this.state.newUser, walletAddress: e.target.value}})}/>
+                <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA' onChange={(e)=> this.setState({newUser:{...this.state.newUser, walletAddressConfirm: e.target.value}})}/>
                 <label style={{fontSize:'10px', color:'gray'}}><b className='subscrypto'>Subscrypto</b> is NOT responsible for the entry of an incorrect ETH address</label><br/>
                 <label style={{fontSize:'10px', color:'gray'}}><b className='subscrypto'>Subscrypto</b> is NOT responsible for loss of any tokens sent to an incorrect address</label>
               </FormGroup>
@@ -243,7 +243,7 @@ class Signup extends Component{
           const phoneRegex = /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/g;
           const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
           const adressRegex = /^0x[a-f, A-F, 0-9]{20}$/;
-          //const passwordRegex
+          const passwordRegex = /^(([A-Za-z]+[!,@,#,$,%,&]*){8})/; //double check
 
           switch(page){
             case 0:
