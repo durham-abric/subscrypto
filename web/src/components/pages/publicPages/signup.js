@@ -1,5 +1,5 @@
 // id=4
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import {Panel, Form, FormGroup, ButtonGroup, Button, Row, Radio, Modal} from 'react-bootstrap';
 //import ProgressBar from '../../subcomponents/progressBar.js'
 
@@ -107,7 +107,7 @@ class Signup extends Component{
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Date of Birth</label>
-                    <input className='form-control' type='date' onChange={(e)=> this.setState({newUser:{...this.state.newUser, dob: e.target.value}})}/>
+                    <input className='form-control' type='date' onChange={(e)=> this.updateDOB(e)}/>
                   </FormGroup>
                 </Form>
                 </div>
@@ -229,6 +229,10 @@ class Signup extends Component{
               </FormGroup>
           );
         }
+        updateDOB(e){
+          e.persist();
+          this.setState({newUser:{...this.state.newUser, dob: e.target.value}});
+        }
 
         handleButton(){
           var page = this.state.page;
@@ -237,36 +241,64 @@ class Signup extends Component{
           const nameRegex = /^[A-Z]+(([',.-][a-zA-Z])?[a-zA-Z]*)*$/;
           const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
           const phoneRegex = /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/g;
-          const dateRegex = /^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$/gm;
+          const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
           const adressRegex = /^0x[a-f, A-F, 0-9]{20}$/;
-          const passwordRegex
+          //const passwordRegex
 
           switch(page){
             case 0:
-              var firstNameValid = nameRegex.test(this.state.newUser.firstName).val();
-              var lastNameValid = nameRegex.test(this.state.newUser.lastName).val();
-              var dobValid = dateRegex.test(this.state.newUser.dob).val();
+              var firstNameValid = nameRegex.test(this.state.newUser.firstName);
+              var lastNameValid = nameRegex.test(this.state.newUser.lastName);
+              var dobValid = dateRegex.test(this.state.newUser.dob);
+              var dob = new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10));
+              var today = new Date();
+              var olderThan18; //Needs implementation
+
+              if((today.getFullYear() - dob.getFullYear()) > 18){
+                olderThan18 = true;
+              }else if((today.getFullYear() - dob.getFullYear()) == 18){
+                if(today.getMonth() > dob.getMonth()){
+                  olderThan18 = true;
+                }else if (today.getMonth() == dob.getMonth()){
+                  if(today.getDay() >= dob.getDay()){
+                    olderThan18 = true;
+                  }else{
+                    olderThan18 = false;
+                  }
+                }else{
+                  olderThan18 = false;
+                }
+              }else{
+                  olderThan18 = false;
+              }
+                
               if(firstNameValid && lastNameValid && dobValid){
                 this.setState({page: ++page});
                 this.setState({progress: progress+=25});
-              }else{
+              }else{ 
                 var alertText = "Error: INVALID INPUT\n";
-                !firstNameValid? alertText+="Reformat 'First Name' [must begin with capital & contain only letters]\n":null;
-                !lastNameValid? alertText+="Reformat 'Last Name' [must begin with capital & contain only letters]\n":null;
-                !dobValid? alertText+="Choose or enter valid 'Date of Birth'":null;
+                !firstNameValid? alertText+="-Reformat 'First Name' [must begin with capital & contain only letters]\n":null;
+                !lastNameValid? alertText+="-Reformat 'Last Name' [must begin with capital & contain only letters]\n":null;
+                !dobValid? alertText+="-Choose or enter valid 'Date of Birth'":null;
                 window.alert(alertText);
+
+                //Immediately redirect to home if user is not 18 years old
+                if(!olderThan18 && lastNameValid && firstNameValid && dobValid){
+                  window.alert("Sorry! You must be 18 years old to use Subscrypto...");
+                  this.props.history.push("/");
+                }
               }
               break;
             case 1:
-              var emailValid = emailRegex.test(this.state.newUser.email).val();
-              var phoneValid = phoneRegex.test(this.state.newUser.phoneNumber).val();
+              var emailValid = emailRegex.test(this.state.newUser.email);
+              var phoneValid = phoneRegex.test(this.state.newUser.phoneNumber);
               if(emailValid && phoneValid){
                 this.setState({page: ++page});
                 this.setState({progress: progress+=25});
               }else{
                 var alertText = "Error: INVALID INPUT\n";
-                !emailValid? alertText+="Enter a valid 'Email Address'\n":null;
-                !phoneValid? alertText+="Enter a valid 'Phone Number' or reformat as suggested [(###) ###-####]\n":null;
+                !emailValid? alertText+="-Enter a valid 'Email Address'\n":null;
+                !phoneValid? alertText+="-Enter a valid 'Phone Number' or reformat as suggested [(###) ###-####]\n":null;
                 window.alert(alertText);
               }
             break;
