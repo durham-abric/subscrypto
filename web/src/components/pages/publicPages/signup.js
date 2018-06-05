@@ -68,8 +68,8 @@ class Signup extends Component{
                       </div>
                     </div>
                     {this.signupPanel(this.state.page)}
-                    {this.state.page>0?<Button onClick={this.backPage}><span className="glyphicon glyphicon-chevron-left"/></Button>:null}  
-                    <Button onClick={this.handleButton} style={{height:'34px'}}>{this.state.page<4?<span className="glyphicon glyphicon-chevron-right"/>:<p>Confirm &amp; Create Account</p>}</Button>
+                    {this.state.page>0?<Button className='clickable' onClick={this.backPage}><span className="glyphicon glyphicon-chevron-left"/></Button>:null}  
+                    <Button className='primary clickable' onClick={this.handleButton} style={{height:'34px'}}>{this.state.page<4?<span className="glyphicon glyphicon-chevron-right"/>:<p>Confirm &amp; Create Account</p>}</Button>
                   </Panel.Body>
                 </Panel>
                 </div>
@@ -83,7 +83,7 @@ class Signup extends Component{
                       <p>Stay tuned for news &amp; updates before the application launches!</p>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button className='primary' onClick={this.closePopup}>Sounds Good!</Button>
+                      <Button className='primary clickable' onClick={this.closePopup}>Sounds Good!</Button>
                     </Modal.Footer>
                   </Modal>
                 </div>
@@ -155,7 +155,7 @@ class Signup extends Component{
                 <Form>
                   <FormGroup>
                     <ButtonGroup>
-                      <Radio onClick={()=>this.setState({userWallet:true})}>Enter an Existing Ethereum Wallet Address</Radio>
+                      <Radio className='clickable' onClick={()=>this.setState({userWallet:true})}>Enter an Existing Ethereum Wallet Address</Radio>
                       <Radio className="disabled" onClick={()=>this.setState({userWallet:false})}>Generate New Ethereum Wallet</Radio>
                     </ButtonGroup>
                     <br/>
@@ -242,18 +242,19 @@ class Signup extends Component{
           const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
           const phoneRegex = /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/g;
           const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-          const adressRegex = /^0x[a-f, A-F, 0-9]{20}$/;
+          const addressRegex = /^0x[a-f, A-F, 0-9]{20}$/;
           const passwordRegex = /^(([A-Za-z]+[!,@,#,$,%,&]*){8})/; //double check
 
           switch(page){
             case 0:
               var firstNameValid = nameRegex.test(this.state.newUser.firstName);
               var lastNameValid = nameRegex.test(this.state.newUser.lastName);
+              var dob = (dob != null) ? new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10)):null;
               var dobValid = dateRegex.test(this.state.newUser.dob);
-              var dob = new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10));
               var today = new Date();
-              var olderThan18; //Needs implementation
+              var olderThan18; 
 
+              if(dob && this.state.newUser.firstName && this.state.newUser.lastName){
               if((today.getFullYear() - dob.getFullYear()) > 18){
                 olderThan18 = true;
               }else if((today.getFullYear() - dob.getFullYear()) == 18){
@@ -271,15 +272,15 @@ class Signup extends Component{
               }else{
                   olderThan18 = false;
               }
-                
+
               if(firstNameValid && lastNameValid && dobValid){
                 this.setState({page: ++page});
                 this.setState({progress: progress+=25});
               }else{ 
                 var alertText = "Error: INVALID INPUT\n";
-                !firstNameValid? alertText+="-Reformat 'First Name' [must begin with capital & contain only letters]\n":null;
-                !lastNameValid? alertText+="-Reformat 'Last Name' [must begin with capital & contain only letters]\n":null;
-                !dobValid? alertText+="-Choose or enter valid 'Date of Birth'":null;
+                !firstNameValid? alertText+="* Reformat 'First Name' [must begin with capital & contain only letters]\n":null;
+                !lastNameValid? alertText+="* Reformat 'Last Name' [must begin with capital & contain only letters]\n":null;
+                !dobValid? alertText+="* Choose or enter valid 'Date of Birth'":null;
                 window.alert(alertText);
 
                 //Immediately redirect to home if user is not 18 years old
@@ -288,8 +289,16 @@ class Signup extends Component{
                   this.props.history.push("/");
                 }
               }
+
+            }else{
+              window.alert("Error: INVALID INPUT\n* Must fill all requested fields before proceeding")
+            }
+  
               break;
             case 1:
+
+              //Should also check whether an account w/ same email already exists or not
+              
               var emailValid = emailRegex.test(this.state.newUser.email);
               var phoneValid = phoneRegex.test(this.state.newUser.phoneNumber);
               if(emailValid && phoneValid){
@@ -297,16 +306,41 @@ class Signup extends Component{
                 this.setState({progress: progress+=25});
               }else{
                 var alertText = "Error: INVALID INPUT\n";
-                !emailValid? alertText+="-Enter a valid 'Email Address'\n":null;
-                !phoneValid? alertText+="-Enter a valid 'Phone Number' or reformat as suggested [(###) ###-####]\n":null;
+                !emailValid? alertText+="* Enter a valid 'Email Address'\n":null;
+                !phoneValid? alertText+="* Enter a valid 'Phone Number' or reformat as suggested [(###) ###-####]\n":null;
                 window.alert(alertText);
               }
             break;
             case 2:
-              //password confirm
+              if(!this.state.newUser.password.equals(this.state.newUser.passwordConfirm)){
+                alert("Passwords do not match! Try again...");
+              }
+
+              var passwordValid = passwordRegex.test(this.state.newUser.password);
+              if(passwordValid){
+                this.setState({page: ++page});
+                this.setState({progress: progress+=25});
+              }else{
+                var alertText = "Error: INVALID INPUT\n";
+                !passwordValid? alertText+="* 'Password' does not meet required format\n":null;
+                window.alert(alertText);
+              }
             break;
             case 3:
-              //address confirm
+            //STOPPEd HERE
+              if(!this.state.newUser.walletAddress.equals(this.state.newUser.walletAddressConfirm)){
+                window.alert("Ethereum wallet adresses do not match! Try again...");
+              }
+
+              var walletValid = addressRegex.test(this.state.newUser.walletAddress);
+              if(walletValid){
+                this.setState({page: ++page});
+                this.setState({progress: progress+=25});
+              }else{
+                var alertText = "Error: INVALID INPUT\n";
+                !passwordValid? alertText+="* 'Wallet Address' does not meet required format & is invalid\n":null;
+                window.alert(alertText);
+              }
             break;
             case 4:
               this.createAccount();

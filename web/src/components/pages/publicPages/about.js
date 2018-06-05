@@ -42,7 +42,7 @@ class About extends Component{
               <div className='content-wrapper center'>
               <div className = 'about-wrapper'>
                 <div id='aboutConcept'>
-                  <Panel className='about-panel'>
+                  <Panel classNa me='about-panel'>
                   <Panel.Heading><Panel.Title>Concept heading</Panel.Title></Panel.Heading>
                     <Panel.Body>Some default panel content here.</Panel.Body>
                   </Panel>
