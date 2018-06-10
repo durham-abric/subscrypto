@@ -15,7 +15,8 @@ class Login extends Component{
           email: null,
           password: null,
           validUID: null,
-          validationLevel: 0
+          codeEntered: null,
+          validationLevel: 0 //0 -> No validation, 1 -> credentials verifies, 2 -> Identity verified (SMS)
         }
 
         this.handleButton = this.handleButton.bind(this);
@@ -75,27 +76,39 @@ class Login extends Component{
                   <input className="form-control" type='password' onChange={(e)=>this.setState({password:e.target.value})}></input>
                 </FormGroup>
                 <FormGroup>
-                  <Button className='clickable' onClick={this.handleButton(this.state.validationLevel)}>Login</Button>
+                  <Button className='clickable primary' onClick={this.handleButton(this.state.validationLevel)}>Login</Button>
                 </FormGroup>
               </Form>);
-            break;
             case 1:
               return(
               <Form>
                 <FormGroup>
                   <label className="control-label">Password</label>
-                  <input className="form-control" type='password' onChange={(e)=>this.setState({password:e.target.value})}></input>
+                  <input className="form-control" type='text' onChange={(e)=>this.setState({codeEntered:e.target.value})}></input>
                 </FormGroup>
                 <FormGroup>
-                  <Button className='clickable' onClick={this.handleButton(this.state.validationLevel)}>Login</Button>
+                  <Button className='clickable primary' onClick={this.handleButton(this.state.validationLevel)}>Login</Button>
                 </FormGroup>
               </Form>);
-            break;
           }
         }
 
         popupBody(validation){
           switch(validation){
+            case 0:
+            return(
+              <div>
+                 <Modal.Header>
+                    <h4>Error</h4>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>You should not be seeing this display.</p>
+                    <p>Your credentials have not been verified.</p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button className='primary' onClick={this.closePopup}>Close</Button>
+                  </Modal.Footer>
+              </div>);
             case 1:
               return(
                 <div>
@@ -110,7 +123,6 @@ class Login extends Component{
                     <Button className='primary' onClick={this.closePopup}>Okay</Button>
                   </Modal.Footer>
                 </div>);
-            break;
             case 2:
               return(
                 <div>
@@ -121,10 +133,9 @@ class Login extends Component{
                     <p>Welcome to <b className='subscrypto'>Subscrypto</b>!</p>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button className='primary' onClick={this.closePopup}>Close</Button>
+                    <Button className='primary' onClick={this.closePopup.then(this.handleButton)}>Close</Button>
                   </Modal.Footer>
                 </div>);
-            break;
           }
         }
 
@@ -140,9 +151,18 @@ class Login extends Component{
         handleButton(validation){
           switch(validation){
             case 0:
-
+              //check if user credentials exist
+              var email = this.state.email;
+              var password = this.state.password;
+              
             break;
             case 1:
+              //check if correct access code entered
+              var code = this.state.codeEntered;
+              
+            break;
+            case 2:
+              this.props.history.push('/*/bashboard');
 
             break;
           }

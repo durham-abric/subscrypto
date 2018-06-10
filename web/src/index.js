@@ -21,7 +21,7 @@ import Dashboard from './components/pages/privatePages/dashboard.js';
 import Oops from './components/pages/publicPages/oops.js';
 import * as Firebase from './firebase/firebase.js';
 
-//Configure database connection 
+//Initialize database connection 
 Firebase.init();
 
 ReactDOM.render(
@@ -47,6 +47,5 @@ ReactDOM.render(
     <Footer/>
 </div>,
 document.getElementById('root'));
-
 
 registerServiceWorker();

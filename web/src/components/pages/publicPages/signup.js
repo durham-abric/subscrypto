@@ -1,7 +1,7 @@
 // id=4
 import React, { Component} from 'react';
 import {Panel, Form, FormGroup, ButtonGroup, Button, Row, Radio, Modal} from 'react-bootstrap';
-//import ProgressBar from '../../subcomponents/progressBar.js'
+import * as firebase from 'firebase';
 
 class Signup extends Component{
     constructor(props){
@@ -20,10 +20,10 @@ class Signup extends Component{
             phoneNumber: null,
             email: null,
             password: null,
-            passwordConfirm: null,
-            walletAddress: null,
-            walletAddressConfirm: null
-          }
+            walletAddress: null
+         },
+          walletAddressConfirm: null,
+          passwordConfirm: null
         }
 
         this.createAccount = this.createAccount.bind(this);
@@ -140,7 +140,7 @@ class Signup extends Component{
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Confirm Password</label>
-                    <input className='form-control' type='password' onChange={(e)=> this.setState({newUser:{...this.state.newUser, passwordConfirm: e.target.value}})}/>
+                    <input className='form-control' type='password' onChange={(e)=> this.setState({passwordConfirm: e.target.value})}/>
                     <br/>
                     <label style={{fontSize:'10px', color:'gray'}}>Your password must be 8+ characters &amp; contain at least <u>one</u> numerical digit 
                       &amps; <u>one</u> special character [!, @, #, $, %, &amp;]</label>
@@ -218,7 +218,7 @@ class Signup extends Component{
               </FormGroup>
               <FormGroup>
                 <label className='control-label'>Confirm Ethereum Wallet Address</label>
-                <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA' onChange={(e)=> this.setState({newUser:{...this.state.newUser, walletAddressConfirm: e.target.value}})}/>
+                <input className='form-control' type='text' placeholder='0xAAAAAAAAAAAAAAAAAAAA' onChange={(e)=> this.setState({walletAddressConfirm: e.target.value})}/>
                 <label style={{fontSize:'10px', color:'gray'}}><b className='subscrypto'>Subscrypto</b> is NOT responsible for the entry of an incorrect ETH address</label><br/>
                 <label style={{fontSize:'10px', color:'gray'}}><b className='subscrypto'>Subscrypto</b> is NOT responsible for loss of any tokens sent to an incorrect address</label>
               </FormGroup>
@@ -359,6 +359,13 @@ class Signup extends Component{
 
         createAccount(){
           //Use firebase functions to create the account
+          firebase.auth().createUserWithEmailAndPassword(this.state.newUser.email, this.state.newUser.password).then(() =>{
+             //NOW: add user to database with more in depth information
+            this.openPopup();
+          }).catch(function(error){
+            alert(error);
+          }).then(()=>{
+          //Clear cached information
           this.setState(
             {
               ...this.state,
@@ -371,13 +378,13 @@ class Signup extends Component{
                 phoneNumber: null,
                 email: null,
                 password: null,
-                passwordConfirm: null,
-                walletAddress: null,
-                walletAddressConfirm: null
-              }
+                walletAddress: null
+              },
+              passwordConfirm: null,
+              walletAddressConfirm: null
             }
           );
-          this.openPopup();
+        });
         }
 
         openPopup(){

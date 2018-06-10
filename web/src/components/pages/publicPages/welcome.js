@@ -34,7 +34,7 @@ constructor(props){
 
   render() {
     return (
-      <div className="content-wrapper">
+      <div className="welcome-wrapper">
         <header className="welcome-header">
           <img className="welcome-logo" src = {require('../../../images/Subscrypto_header.png')} 
             style ={{height:this.state.logoHeight, width:this.state.logoWidth}} alt="Subscrypto Header"/>
