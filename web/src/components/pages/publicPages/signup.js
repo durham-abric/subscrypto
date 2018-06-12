@@ -2,6 +2,8 @@
 import React, { Component} from 'react';
 import {Panel, Form, FormGroup, ButtonGroup, Button, Row, Radio, Modal} from 'react-bootstrap';
 import * as firebase from 'firebase';
+import {FirebaseFirestore, Timestamp} from 'firebase';
+var ReCaptcha = require('react-recaptcha-google');
 
 class Signup extends Component{
     constructor(props){
@@ -23,10 +25,10 @@ class Signup extends Component{
             walletAddress: null
          },
           walletAddressConfirm: null,
-          passwordConfirm: null
+          passwordConfirm: null,
         }
 
-        this.createAccount = this.createAccount.bind(this);
+        this.createUserProfile = this.createUserProfile.bind(this);
         this.walletAddressEntry = this.walletAddressEntry.bind(this);
         this.signupPanel = this.signupPanel.bind(this);
         this.handleButton = this.handleButton.bind(this);
@@ -91,6 +93,7 @@ class Signup extends Component{
             </div>);
         }
 
+        //Note: ReCaptcha site key is for localhost, register domain for prod
         signupPanel(page){
           switch(page){
             case 0:
@@ -180,27 +183,27 @@ class Signup extends Component{
                   <h4> Review &amp; Confirm Account Details </h4>
                   <FormGroup>
                     <label className='control-label'>Name</label>
-                    <input type="text" readonly className="form-control disabled" value={name}/>          
+                    <input type="text" readOnly className="form-control disabled" value={name}/>          
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Date of Birth</label>
-                    <input type="text" readonly className="form-control disabled" value={birthday}/>          
+                    <input type="text" readOnly className="form-control disabled" value={birthday}/>          
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Email Address</label>
-                    <input type="text" readonly className="form-control disabled" value={email}/>          
+                    <input type="text" readOnly className="form-control disabled" value={email}/>          
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Phone Number</label>
-                    <input type="text" readonly className="form-control disabled" value={phone}/>          
+                    <input type="text" readOnly className="form-control disabled" value={phone}/>          
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Password</label>
-                    <input type="text" readonly className="form-control disabled" value={password}/>          
+                    <input type="text" readOnly className="form-control disabled" value={password}/>          
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Wallet Address</label>
-                    <input type="text" readonly className="form-control disabled" value={address}/>          
+                    <input type="text" readOnly className="form-control disabled" value={address}/>          
                   </FormGroup>
                 </Form>
               </div>
@@ -232,7 +235,7 @@ class Signup extends Component{
         updateDOB(e){
           e.persist();
           this.setState({newUser:{...this.state.newUser, dob: e.target.value}});
-        }
+        } 
 
         handleButton(){
           var page = this.state.page;
@@ -249,11 +252,12 @@ class Signup extends Component{
             case 0:
               var firstNameValid = nameRegex.test(this.state.newUser.firstName);
               var lastNameValid = nameRegex.test(this.state.newUser.lastName);
-              var dob = (dob != null) ? new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10)):null;
+              var dob = (this.state.newUser.dob != null) ? new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10)):null;
               var dobValid = dateRegex.test(this.state.newUser.dob);
               var today = new Date();
               var olderThan18; 
 
+              //verify logic here (NOT WORKING)
               if(dob && this.state.newUser.firstName && this.state.newUser.lastName){
               if((today.getFullYear() - dob.getFullYear()) > 18){
                 olderThan18 = true;
@@ -312,7 +316,7 @@ class Signup extends Component{
               }
             break;
             case 2:
-              if(!this.state.newUser.password.equals(this.state.newUser.passwordConfirm)){
+              if(!this.state.newUser.password === this.state.newUser.passwordConfirm){
                 alert("Passwords do not match! Try again...");
               }
 
@@ -328,7 +332,7 @@ class Signup extends Component{
             break;
             case 3:
             //STOPPEd HERE
-              if(!this.state.newUser.walletAddress.equals(this.state.newUser.walletAddressConfirm)){
+              if(!this.state.newUser.walletAddress === this.state.newUser.walletAddressConfirm){
                 window.alert("Ethereum wallet adresses do not match! Try again...");
               }
 
@@ -343,7 +347,7 @@ class Signup extends Component{
               }
             break;
             case 4:
-              this.createAccount();
+              this.createUserProfile();
             break;
           }
         }
@@ -357,42 +361,63 @@ class Signup extends Component{
           }
         }
 
-        createAccount(){
-          //Use firebase functions to create the account
-          firebase.auth().createUserWithEmailAndPassword(this.state.newUser.email, this.state.newUser.password).then(() =>{
-             //NOW: add user to database with more in depth information
-            this.openPopup();
-          }).catch(function(error){
-            alert(error);
-          }).then(()=>{
-          //Clear cached information
-          this.setState(
-            {
-              ...this.state,
-              progress: 0,
-              page: 0,
-              userWallet: true,
-              newUser:{
-                firstName: null,
-                lastName: null,
-                phoneNumber: null,
-                email: null,
-                password: null,
-                walletAddress: null
-              },
-              passwordConfirm: null,
-              walletAddressConfirm: null
-            }
-          );
-        });
-        }
-
         openPopup(){
           this.setState({accountCreatedPopup: true});
         }
 
         closePopup(){
           this.setState({accountCreatedPopup: false});
+        }
+
+        createUserProfile(){
+          var auth = firebase.auth();
+          var dob = new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10));
+          auth.createUserWithEmailAndPassword(this.state.newUser.email, this.state.newUser.password).then(() => {
+            alert("Adding document to firestore");
+            var users = firebase.firestore().collection('/users');
+            var userDoc = {
+              active: true,
+              dob: Timestamp(FirebaseFirestore.Timestamp(dob)),
+              firstName: this.state.newUser.firstName,
+              lastName: this.state.newUser.lastName,
+              phoneNumber: this.state.newUser.phoneNumber,
+              uid: firebase.auth().currentUser.uid,
+              walletAddress: this.state.newUser.walletAddress
+            };
+            users.add(userDoc).then((docRef) => {
+                console.log("Document written to /users with DocumentReference: ", docRef.id);
+                this.openPopup()
+              })
+              .then(() => {this.setState(
+                {
+                  ...this.state,
+                  progress: 0,
+                  page: 0,
+                  userWallet: true,
+                  newUser:{
+                    firstName: null,
+                    lastName: null,
+                    phoneNumber: null,
+                    email: null,
+                    dob: null,
+                    password: null,
+                    walletAddress: null
+                  },
+                  passwordConfirm: null,
+                  walletAddressConfirm: null
+                }
+              );
+              alert("State cleared!")}) 
+              .catch(((error) => {
+                console.log("Error Reported: ", error);
+                console.log("Document could not be written to /users. User account being rolled back: ", firebase.auth().currentUser.uid);
+              })
+              .then(() => {
+                firebase.auth().currentUser.delete();
+              }));
+          }).catch((error) => {
+            console.log(error, ": User profile could not be created.");
+          })
         }
 }
 
