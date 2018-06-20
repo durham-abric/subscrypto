@@ -11,6 +11,7 @@ var config = {
 
 export const init=()=>{
     firebase.initializeApp(config);
+    firebase.auth().languageCode = 'it';
 }
 
 export const logout =()=>{

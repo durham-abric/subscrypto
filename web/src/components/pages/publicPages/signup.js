@@ -1,10 +1,9 @@
 // id=4
 import React, { Component} from 'react';
 import {Panel, Form, FormGroup, ButtonGroup, Button, Row, Radio, Modal} from 'react-bootstrap';
-import * as firebase from 'firebase';
-import {FirebaseFirestore, Timestamp} from 'firebase';
+import UserServices from "../../../services/user/userFactory.js"
 var ReCaptcha = require('react-recaptcha-google');
-
+ 
 class Signup extends Component{
     constructor(props){
         super(props);
@@ -27,7 +26,7 @@ class Signup extends Component{
           walletAddressConfirm: null,
           passwordConfirm: null,
         }
-
+ 
         this.createUserProfile = this.createUserProfile.bind(this);
         this.walletAddressEntry = this.walletAddressEntry.bind(this);
         this.signupPanel = this.signupPanel.bind(this);
@@ -36,23 +35,23 @@ class Signup extends Component{
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
       }
-      
+     
         resize = () => {
           this.setState({width: window.innerWidth, height: window.innerHeight});
         }
-      
+     
         componentWillMount(){
-          
+         
         }
-      
+     
         componentDidMount(){
           window.addEventListener('resize', this.resize);
         }
-      
+     
         componentWillUnmount(){
           window.removeEventListener('resize', this.resize);
         }
-      
+     
         render() {
           var progress = this.state.progress + '%';
           var progressText = progress + " Complete";
@@ -70,7 +69,7 @@ class Signup extends Component{
                       </div>
                     </div>
                     {this.signupPanel(this.state.page)}
-                    {this.state.page>0?<Button className='clickable' onClick={this.backPage}><span className="glyphicon glyphicon-chevron-left"/></Button>:null}  
+                    {this.state.page>0?<Button className='clickable' onClick={this.backPage}><span className="glyphicon glyphicon-chevron-left"/></Button>:null} 
                     <Button className='primary clickable' onClick={this.handleButton} style={{height:'34px'}}>{this.state.page<4?<span className="glyphicon glyphicon-chevron-right"/>:<p>Confirm &amp; Create Account</p>}</Button>
                   </Panel.Body>
                 </Panel>
@@ -89,10 +88,10 @@ class Signup extends Component{
                     </Modal.Footer>
                   </Modal>
                 </div>
-              </div> 
+              </div>
             </div>);
         }
-
+ 
         //Note: ReCaptcha site key is for localhost, register domain for prod
         signupPanel(page){
           switch(page){
@@ -145,7 +144,7 @@ class Signup extends Component{
                     <label className='control-label'>Confirm Password</label>
                     <input className='form-control' type='password' onChange={(e)=> this.setState({passwordConfirm: e.target.value})}/>
                     <br/>
-                    <label style={{fontSize:'10px', color:'gray'}}>Your password must be 8+ characters &amp; contain at least <u>one</u> numerical digit 
+                    <label style={{fontSize:'10px', color:'gray'}}>Your password must be 8+ characters &amp; contain at least <u>one</u> numerical digit
                       &amps; <u>one</u> special character [!, @, #, $, %, &amp;]</label>
                   </FormGroup>
                 </Form>
@@ -183,27 +182,27 @@ class Signup extends Component{
                   <h4> Review &amp; Confirm Account Details </h4>
                   <FormGroup>
                     <label className='control-label'>Name</label>
-                    <input type="text" readOnly className="form-control disabled" value={name}/>          
+                    <input type="text" readOnly className="form-control disabled" value={name}/>         
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Date of Birth</label>
-                    <input type="text" readOnly className="form-control disabled" value={birthday}/>          
+                    <input type="text" readOnly className="form-control disabled" value={birthday}/>         
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Email Address</label>
-                    <input type="text" readOnly className="form-control disabled" value={email}/>          
+                    <input type="text" readOnly className="form-control disabled" value={email}/>         
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Phone Number</label>
-                    <input type="text" readOnly className="form-control disabled" value={phone}/>          
+                    <input type="text" readOnly className="form-control disabled" value={phone}/>         
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Password</label>
-                    <input type="text" readOnly className="form-control disabled" value={password}/>          
+                    <input type="text" readOnly className="form-control disabled" value={password}/>         
                   </FormGroup>
                   <FormGroup>
                     <label className='control-label'>Wallet Address</label>
-                    <input type="text" readOnly className="form-control disabled" value={address}/>          
+                    <input type="text" readOnly className="form-control disabled" value={address}/>         
                   </FormGroup>
                 </Form>
               </div>
@@ -211,7 +210,7 @@ class Signup extends Component{
             break;
           }
         }
-
+ 
         walletAddressEntry(userEntry){
           return(userEntry?
             <div>
@@ -235,19 +234,19 @@ class Signup extends Component{
         updateDOB(e){
           e.persist();
           this.setState({newUser:{...this.state.newUser, dob: e.target.value}});
-        } 
-
+        }
+ 
         handleButton(){
           var page = this.state.page;
           var progress = this.state.progress;
-
+ 
           const nameRegex = /^[A-Z]+(([',.-][a-zA-Z])?[a-zA-Z]*)*$/;
           const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
           const phoneRegex = /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/g;
           const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
           const addressRegex = /^0x[a-f, A-F, 0-9]{20}$/;
           const passwordRegex = /^(([A-Za-z]+[!,@,#,$,%,&]*){8})/; //double check
-
+ 
           switch(page){
             case 0:
               var firstNameValid = nameRegex.test(this.state.newUser.firstName);
@@ -255,8 +254,8 @@ class Signup extends Component{
               var dob = (this.state.newUser.dob != null) ? new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10)):null;
               var dobValid = dateRegex.test(this.state.newUser.dob);
               var today = new Date();
-              var olderThan18; 
-
+              var olderThan18;
+ 
               //verify logic here (NOT WORKING)
               if(dob && this.state.newUser.firstName && this.state.newUser.lastName){
               if((today.getFullYear() - dob.getFullYear()) > 18){
@@ -276,33 +275,33 @@ class Signup extends Component{
               }else{
                   olderThan18 = false;
               }
-
+ 
               if(firstNameValid && lastNameValid && dobValid){
                 this.setState({page: ++page});
                 this.setState({progress: progress+=25});
-              }else{ 
+              }else{
                 var alertText = "Error: INVALID INPUT\n";
                 !firstNameValid? alertText+="* Reformat 'First Name' [must begin with capital & contain only letters]\n":null;
                 !lastNameValid? alertText+="* Reformat 'Last Name' [must begin with capital & contain only letters]\n":null;
                 !dobValid? alertText+="* Choose or enter valid 'Date of Birth'":null;
                 window.alert(alertText);
-
+ 
                 //Immediately redirect to home if user is not 18 years old
                 if(!olderThan18 && lastNameValid && firstNameValid && dobValid){
                   window.alert("Sorry! You must be 18 years old to use Subscrypto...");
                   this.props.history.push("/");
                 }
               }
-
+ 
             }else{
               window.alert("Error: INVALID INPUT\n* Must fill all requested fields before proceeding")
             }
-  
+ 
               break;
             case 1:
-
+ 
               //Should also check whether an account w/ same email already exists or not
-              
+             
               var emailValid = emailRegex.test(this.state.newUser.email);
               var phoneValid = phoneRegex.test(this.state.newUser.phoneNumber);
               if(emailValid && phoneValid){
@@ -319,7 +318,7 @@ class Signup extends Component{
               if(!this.state.newUser.password === this.state.newUser.passwordConfirm){
                 alert("Passwords do not match! Try again...");
               }
-
+ 
               var passwordValid = passwordRegex.test(this.state.newUser.password);
               if(passwordValid){
                 this.setState({page: ++page});
@@ -335,7 +334,7 @@ class Signup extends Component{
               if(!this.state.newUser.walletAddress === this.state.newUser.walletAddressConfirm){
                 window.alert("Ethereum wallet adresses do not match! Try again...");
               }
-
+ 
               var walletValid = addressRegex.test(this.state.newUser.walletAddress);
               if(walletValid){
                 this.setState({page: ++page});
@@ -351,7 +350,7 @@ class Signup extends Component{
             break;
           }
         }
-
+ 
         backPage(){
           var page = this.state.page;
           var progress = this.state.progress;
@@ -360,65 +359,19 @@ class Signup extends Component{
             this.setState({progress: progress-=25});
           }
         }
-
+ 
         openPopup(){
           this.setState({accountCreatedPopup: true});
         }
-
+ 
         closePopup(){
           this.setState({accountCreatedPopup: false});
         }
-
+ 
         createUserProfile(){
-          var auth = firebase.auth();
-          var dob = new Date(this.state.newUser.dob.substring(0,4), this.state.newUser.dob.substring(5,7), this.state.newUser.dob.substring(8,10));
-          auth.createUserWithEmailAndPassword(this.state.newUser.email, this.state.newUser.password).then(() => {
-            alert("Adding document to firestore");
-            var users = firebase.firestore().collection('/users');
-            var userDoc = {
-              active: true,
-              dob: Timestamp(FirebaseFirestore.Timestamp(dob)),
-              firstName: this.state.newUser.firstName,
-              lastName: this.state.newUser.lastName,
-              phoneNumber: this.state.newUser.phoneNumber,
-              uid: firebase.auth().currentUser.uid,
-              walletAddress: this.state.newUser.walletAddress
-            };
-            users.add(userDoc).then((docRef) => {
-                console.log("Document written to /users with DocumentReference: ", docRef.id);
-                this.openPopup()
-              })
-              .then(() => {this.setState(
-                {
-                  ...this.state,
-                  progress: 0,
-                  page: 0,
-                  userWallet: true,
-                  newUser:{
-                    firstName: null,
-                    lastName: null,
-                    phoneNumber: null,
-                    email: null,
-                    dob: null,
-                    password: null,
-                    walletAddress: null
-                  },
-                  passwordConfirm: null,
-                  walletAddressConfirm: null
-                }
-              );
-              alert("State cleared!")}) 
-              .catch(((error) => {
-                console.log("Error Reported: ", error);
-                console.log("Document could not be written to /users. User account being rolled back: ", firebase.auth().currentUser.uid);
-              })
-              .then(() => {
-                firebase.auth().currentUser.delete();
-              }));
-          }).catch((error) => {
-            console.log(error, ": User profile could not be created.");
-          })
+          UserServices.newUser(this.state.newUser.email, this.state.newUser.password, this.state.newUser.firstName,
+          this.state.newUser.lastName, this.state.newUser.dob, this.state.newUser.phoneNumber, this.state.newUser.walletAddress);
         }
 }
-
+ 
 export default Signup;
